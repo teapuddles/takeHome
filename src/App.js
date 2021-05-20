@@ -6,71 +6,83 @@ import { quizzes } from './data/quizzes.js'
 
 const App = () => {
 
+  // state variables
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0);
-	// sets state to false so we can flip it with a click
 	const [showSummary, setShowSummary] = useState(false);
   const [score, setScore] = useState(0);
-  
+
+  // variables
+  const currentQuestionText = quizzes[currentQuiz].questions[currentQuestion]
 
 
-
-  
   // combines and shuffles answers with Fischer/Yates helper
   const answers = useMemo (() => {
-    const incorrectOptions = quizzes[0].questions[currentQuestion].incorrectAnswers
-    const correctOptions = quizzes[0].questions[currentQuestion].correctAnswer
+    // will make more dynamic later by replacing quizzes with currentQuiz
+    const incorrectOptions = quizzes[currentQuiz].questions[currentQuestion].incorrectAnswers
+    const correctOptions = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
 
     const combinedOptions = [...incorrectOptions, correctOptions]
 
     return shuffle(combinedOptions)
 
-  }, [currentQuestion])
+  }, [currentQuiz, currentQuestion])
 
 
+  // handle Next Question Click
   const handleNextQuestionClick = () => {
-		// if( answerText === quizzes.questions[currentQuestion].correctAnswer){
-		// 	setScore(score + 1)
-    // }
-    
-		// This logic for adding score will ^^^^^^
-    // likely need to be in a separate function in test. 
-    // to handle highlights + score increment 
-    
+
 		const nextQuestion = currentQuestion + 1
 		setCurrentQuestion(nextQuestion)
-		// this will break without this
-		if(nextQuestion < quizzes.questions.length){
+
+    if(nextQuestion < quizzes[currentQuiz].questions.length){
 			setCurrentQuestion(nextQuestion)
-			// call answer randomizer? 
+	
 		}else{
+      // reset currentQuestion to 0 so it doesn't break before showing summary
+      setCurrentQuestion(0)
 			setShowSummary(true)
 		}
   }
-  
+
+
+  // Handle clicking an answer 
   const handleAnswerClick = (answer) => {
-    return console.log('hi')
+    const theCorrectAnswer = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
+  
+    if( answer === theCorrectAnswer ){
+			setScore(score + 1)
+    }
   }
+
 
   return (
     <div className='app'>
-        {/* {showSummary ? (
-      // ternary for showing the Summary page. 
-    ) : }  */}
+        {showSummary ? (
+      <Summary score={score}/>
+    ) : (
+      <>
       <div className='quiz-title'>{quizzes[0].title}</div>
-    <div className='question-section'>
-      <div className='answer-section'>
-        {/* map out shuffled answers to buttons here */}
+        <div className='question-section'>
+        <div className='question-text'>{currentQuestionText.text}</div>
+        <div className='answer-section'>
         {answers.map((answer) => 
             <button onClick={() => handleAnswerClick(answer)}>{answer}</button>
         )}
       </div>
-    </div>
-    {/* next question button */}
-  <button onClick={() => handleNextQuestionClick()}>Click Me for Next</button>
+      </div>
+       <button onClick={() => handleNextQuestionClick()}>Click Me for Next</button>
+      </>
+    )} 
   </div>
   )
 };
 
 
 export default App;
+
+
+
+// TO DO 
+// Change quiz on the summary component (using same logic as handleNextQuestionClick)
+// 

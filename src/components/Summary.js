@@ -1,8 +1,9 @@
 import React from 'react';
 
-const Summary = () => {
+const Summary = (props) => {
+
     return(
-        <h1>"THE END"</h1>
+        <h1>{props.score}</h1>
     )
 }
 
