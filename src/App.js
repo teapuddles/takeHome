@@ -9,12 +9,13 @@ const App = () => {
   // state variables
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0);
-	const [showSummary, setShowSummary] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  // score doesn't really need to be held, but we'll use it later for handling delighters
   const [score, setScore] = useState(0);
+
 
   // combines and shuffles answers with Fischer/Yates helper
   const answers = useMemo (() => {
-    // will make more dynamic later by replacing quizzes with currentQuiz
     const incorrectOptions = quizzes[currentQuiz].questions[currentQuestion].incorrectAnswers
     const correctOptions = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
 
@@ -35,12 +36,12 @@ const App = () => {
 			setCurrentQuestion(nextQuestion)
 	
 		}else{
-      // reset currentQuestion to 0 so it doesn't break before showing summary
       setCurrentQuestion(0)
 			setShowSummary(true)
 		}
   }
 
+  // next quiz click passed to Summary
   const handleNextQuizClick = () => {
 
     const nextQuiz = currentQuiz + 1
@@ -48,13 +49,16 @@ const App = () => {
 
     if(nextQuiz < quizzes.length){
       setCurrentQuiz(nextQuiz)
+      setScore(0)
       setShowSummary(false)
 
     }else{
       setCurrentQuiz(0)
+      setScore(0)
       setShowSummary(false)
     }
   }
+
 
   // Handle clicking an answer 
   const handleAnswerClick = (answer) => {
@@ -74,15 +78,17 @@ const App = () => {
     ) : (
       <>
       <div className='quiz-title'>{quizzes[currentQuiz].title}</div>
+      <br></br>
         <div className='question-section'>
         <div className='question-text'>{quizzes[currentQuiz].questions[currentQuestion].text}</div>
+      <br></br>
         <div className='answer-section'>
         {answers.map((answer) => 
-            <button onClick={() => handleAnswerClick(answer)}>{answer}</button>
+            <li key={answer} onClick={() => handleAnswerClick(answer)}>{answer}</li>
         )}
       </div>
       </div>
-       <button onClick={() => handleNextQuestionClick()}>Click Me for Next</button>
+       <h3 className='next-question' onClick={() => handleNextQuestionClick()}> Next </h3>
       </>
     )} 
   </div>
