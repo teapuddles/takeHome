@@ -12,10 +12,6 @@ const App = () => {
 	const [showSummary, setShowSummary] = useState(false);
   const [score, setScore] = useState(0);
 
-  // variables
-  const currentQuestionText = quizzes[currentQuiz].questions[currentQuestion]
-
-
   // combines and shuffles answers with Fischer/Yates helper
   const answers = useMemo (() => {
     // will make more dynamic later by replacing quizzes with currentQuiz
@@ -45,6 +41,20 @@ const App = () => {
 		}
   }
 
+  const handleNextQuizClick = () => {
+
+    const nextQuiz = currentQuiz + 1
+    setCurrentQuiz(nextQuiz)
+
+    if(nextQuiz < quizzes.length){
+      setCurrentQuiz(nextQuiz)
+      setShowSummary(false)
+
+    }else{
+      setCurrentQuiz(0)
+      setShowSummary(false)
+    }
+  }
 
   // Handle clicking an answer 
   const handleAnswerClick = (answer) => {
@@ -56,15 +66,16 @@ const App = () => {
   }
 
 
+
   return (
     <div className='app'>
         {showSummary ? (
-      <Summary score={score}/>
+      <Summary score={score} handleNextQuizClick={handleNextQuizClick} />
     ) : (
       <>
-      <div className='quiz-title'>{quizzes[0].title}</div>
+      <div className='quiz-title'>{quizzes[currentQuiz].title}</div>
         <div className='question-section'>
-        <div className='question-text'>{currentQuestionText.text}</div>
+        <div className='question-text'>{quizzes[currentQuiz].questions[currentQuestion].text}</div>
         <div className='answer-section'>
         {answers.map((answer) => 
             <button onClick={() => handleAnswerClick(answer)}>{answer}</button>
@@ -81,8 +92,3 @@ const App = () => {
 
 export default App;
 
-
-
-// TO DO 
-// Change quiz on the summary component (using same logic as handleNextQuestionClick)
-// 
