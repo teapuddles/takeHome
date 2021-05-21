@@ -11,6 +11,7 @@ const App = () => {
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showSummary, setShowSummary] = useState(false);
+  const [attempts, setAttempts] = useState(0)
   // score doesn't really need to be held, but we'll use it later for handling Summary data/delighters
   const [score, setScore] = useState(0);
 
@@ -28,7 +29,6 @@ const App = () => {
     return shuffle(combinedOptions)
 
   }, [currentQuiz, currentQuestion])
-  console.log(answers)
 
 
   // handle Next Question Click
@@ -44,7 +44,8 @@ const App = () => {
 	
 		}else{
       setCurrentQuestion(0)
-			setShowSummary(true)
+      setShowSummary(true)
+      setAttempts(attempts + 1)
 		}
   }
 
@@ -68,6 +69,10 @@ const App = () => {
     }
   }
 
+  const handleRetakeClick = () => {
+    setCurrentQuestion(0)
+    setShowSummary(false)
+  }
 
   // Handle clicking an answer 
   const handleAnswerClick = (e, answer) => {
@@ -93,7 +98,7 @@ const App = () => {
     <div className='app'>
        <div className='quiz-title'>{quizzes[currentQuiz].title}</div>
         {showSummary ? (
-      <Summary score={score} quizTotal={quizzes[currentQuiz].questions} handleNextQuizClick={handleNextQuizClick} getMessage={getMessage}/>
+      <Summary score={score} attempts={attempts} quizTotal={quizzes[currentQuiz].questions} handleNextQuizClick={handleNextQuizClick} handleRetakeClick={handleRetakeClick} getMessage={getMessage}/>
     ) : (
       <>
       <br></br>
