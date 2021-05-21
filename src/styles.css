@@ -3,7 +3,7 @@
   text-align: center;
 }
 
-/* Quiz Section */
+/* Answer Section */
 
 .answer-section {
   color: black;
@@ -14,5 +14,29 @@
   list-style-type: upper-alpha;
   border: 1px solid white;
   margin-top: 2px;
+  margin-left: 25px;
+  margin-right: 25px;
 }
 
+.correct-incorrect-message{
+  font-style: italic;
+  font-size: small;
+  margin-bottom: -10px;
+}
+
+
+/* buttons */
+
+.next-question{
+  border: 1px solid black;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding: 5px
+}
+
+.next-quiz-button{
+  border: 1px solid black;
+  margin-left: 80px;
+  margin-right: 80px;
+  padding: 5px
+}
