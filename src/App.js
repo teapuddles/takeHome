@@ -17,7 +17,6 @@ const App = () => {
   const [nextButton, setNextButton] = useState(false)
   const [answerFeedback, setAnswerFeedback] = useState(null)
 
-
   // combines and shuffles answers with Fischer/Yates helper
   const answers = useMemo (() => {
     const incorrectOptions = quizzes[currentQuiz].questions[currentQuestion].incorrectAnswers
@@ -75,12 +74,12 @@ const App = () => {
     setNextButton(true)
   
     if( answer === theCorrectAnswer ){
-      e.target.style.color = 'green'
+      e.target.style.borderColor = 'green'
       setScore(score + 1)
       setAnswerFeedback('Correct!')
 
     } else {
-      e.target.style.color = 'red'
+      e.target.style.borderColor = 'red'
       e.target.style.textDecoration = 'line-through'
       e.target.style.textDecorationColor = 'black'
       setAnswerFeedback('...incorrect')

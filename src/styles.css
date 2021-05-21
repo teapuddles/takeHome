@@ -5,7 +5,14 @@
 
 /* Quiz Section */
 
-.answer-section{
+.answer-section {
   color: black;
-
+  border: 5px;
 }
+
+.answer-list{
+  list-style-type: upper-alpha;
+  border: 1px solid white;
+  margin-top: 2px;
+}
+
