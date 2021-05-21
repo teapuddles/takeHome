@@ -8,8 +8,10 @@ const Summary = (props) => {
 
     return(
         <div>
-        <h1 className='score'>{props.score}</h1>
-        <button className='next-quiz-button' onClick={onNextQuiz}>Next Quiz</button>
+        <h3 className='score'>You scored {props.score} of {props.quizTotal.length} questions right! </h3>
+        {props.getMessage()}
+        <br></br>
+        <h3 className='next-quiz-button' onClick={onNextQuiz}>Next Quiz</h3>
         </div>
     )
 }
