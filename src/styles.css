@@ -34,9 +34,21 @@
   padding: 5px
 }
 
+.summary-buttons{
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .next-quiz-button{
   border: 1px solid black;
-  margin-left: 80px;
-  margin-right: 80px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 5px
+}
+
+.retake-quiz-button{
+  border: 1px solid black;
+  margin-left: 20px;
+  margin-right: 20px;
   padding: 5px
 }

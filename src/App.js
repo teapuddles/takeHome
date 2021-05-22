@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import Summary from './components/Summary.js'
 
-import { shuffle } from './helpers.js'
+import { shuffle, debounce } from './helpers.js'
 import { quizzes } from './data/quizzes.js'
 import { getMessage } from './data/messages.js'
 
@@ -9,11 +9,10 @@ const App = () => {
 
   // state variables
   const [currentQuiz, setCurrentQuiz] = useState(0)
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [showSummary, setShowSummary] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [showSummary, setShowSummary] = useState(false)
   const [attempts, setAttempts] = useState(0)
-  // score doesn't really need to be held, but we'll use it later for handling Summary data/delighters
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0)
 
   const [nextButton, setNextButton] = useState(false)
   const [answerFeedback, setAnswerFeedback] = useState(null)
@@ -71,6 +70,7 @@ const App = () => {
 
   const handleRetakeClick = () => {
     setCurrentQuestion(0)
+    setNextButton(false)
     setShowSummary(false)
   }
 
@@ -105,9 +105,9 @@ const App = () => {
         <div className='question-section'>
         <div className='question-text'>{quizzes[currentQuiz].questions[currentQuestion].text}</div>
       <br></br>
-        <div className='answer-section'>
+        <div className='answer-section' key={currentQuestion}>
         {answers.map((answer) => 
-            <li className='answer-list' key={answer} onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
+            <li className='answer-list' onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
         )}
       </div>
       </div>
@@ -121,4 +121,11 @@ const App = () => {
 
 
 export default App;
+// TO DOS:
+// fix incorrect answers from persisting, see assigned key
 
+// keep score from going up past 1 per correct answer click
+
+// assign attempts to their proper quizzes instead of total attempts for all quizzes
+
+// write your tests!
