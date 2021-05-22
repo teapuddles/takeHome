@@ -10,19 +10,17 @@ const App = () => {
   // state variables
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [showSummary, setShowSummary] = useState(false)
   const [score, setScore] = useState(0)
   const [attempts, setAttempts] = useState(0)
 
+  const [showSummary, setShowSummary] = useState(false)
   const [nextButton, setNextButton] = useState(false)
   const [answerFeedback, setAnswerFeedback] = useState(null)
-
 
   // combines and shuffles answers with Fischer/Yates helper
   const answers = useMemo (() => {
     const incorrectOptions = quizzes[currentQuiz].questions[currentQuestion].incorrectAnswers
     const correctOptions = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
-
     const combinedOptions = [...incorrectOptions, correctOptions]
 
     return shuffle(combinedOptions)
@@ -74,6 +72,7 @@ const App = () => {
 
   const handleRetakeClick = () => {
     setCurrentQuestion(0)
+    setScore(0)
     setNextButton(false)
     setShowSummary(false)
   }
@@ -86,13 +85,16 @@ const App = () => {
     if( answer === theCorrectAnswer ){
       e.target.style.borderColor = 'green'
       e.target.style.pointerEvents = 'none'
-      setScore(score + 1)
+
+      const newScore = score + 1
+      setScore(newScore)
       setAnswerFeedback('Correct!')
 
     } else {
       e.target.style.borderColor = 'red'
       e.target.style.textDecoration = 'line-through'
       e.target.style.textDecorationColor = 'black'
+      
       setAnswerFeedback('Incorrect...')
 
     }
