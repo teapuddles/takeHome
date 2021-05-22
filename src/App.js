@@ -1,7 +1,7 @@
 import React, {useState, useMemo} from 'react';
 import Summary from './components/Summary.js'
 
-import { shuffle, debounce } from './helpers.js'
+import { shuffle } from './helpers.js'
 import { quizzes } from './data/quizzes.js'
 import { getMessage } from './data/messages.js'
 
@@ -81,6 +81,7 @@ const App = () => {
   
     if( answer === theCorrectAnswer ){
       e.target.style.borderColor = 'green'
+      e.target.style.pointerEvents = 'none'
       setScore(score + 1)
       setAnswerFeedback('Correct!')
 
@@ -122,7 +123,7 @@ const App = () => {
 
 export default App;
 // TO DOS:
-// fix incorrect answers from persisting, see assigned key
+// fix incorrect answers from persisting, see assigned key *****DONE ON SATURDAY*****
 
 // keep score from going up past 1 per correct answer click
 

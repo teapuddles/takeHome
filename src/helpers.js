@@ -18,27 +18,3 @@ export const shuffle = (array) => {
   
     return array;
   }
-  
-
-export const debounce = (func, wait) => {
-    let timeout;
-  
-    return function executedFunction(...args) {
-  
-      // The callback function to be executed after 
-      // the debounce time has elapsed
-      const later = () => {
-        timeout = null;
-        
-        // Execute the callback
-        func(...args);
-      };
-      // This will reset the waiting every function execution.
-      // This is the step that prevents the function from
-      // being executed because it will never reach the 
-      // inside of the previous setTimeout  
-      clearTimeout(timeout);
-      
-      timeout = setTimeout(later, wait);
-    };
-  };
