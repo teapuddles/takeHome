@@ -11,8 +11,8 @@ const App = () => {
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [showSummary, setShowSummary] = useState(false)
-  const [attempts, setAttempts] = useState(0)
   const [score, setScore] = useState(0)
+  const [attempts, setAttempts] = useState(0)
 
   const [nextButton, setNextButton] = useState(false)
   const [answerFeedback, setAnswerFeedback] = useState(null)
@@ -44,7 +44,9 @@ const App = () => {
 		}else{
       setCurrentQuestion(0)
       setShowSummary(true)
-      setAttempts(attempts + 1)
+      // at the end of quiz add to attempts
+      const newAttempt = attempts + 1
+      setAttempts(newAttempt)
 		}
   }
 
@@ -57,12 +59,14 @@ const App = () => {
     if(nextQuiz < quizzes.length){
       setCurrentQuiz(nextQuiz)
       setScore(0)
+      setAttempts(0)
       setNextButton(false)
       setShowSummary(false)
 
     }else{
       setCurrentQuiz(0)
       setScore(0)
+      setAttempts(0)
       setNextButton(false)
       setShowSummary(false)
     }
@@ -125,8 +129,8 @@ export default App;
 // TO DOS:
 // fix incorrect answers from persisting, see assigned key *****DONE ON SATURDAY*****
 
-// keep score from going up past 1 per correct answer click
+// keep score from going up past 1 per correct answer click *****DONE ON SATURDAY*****
 
-// assign attempts to their proper quizzes instead of total attempts for all quizzes
+// assign attempts to their proper quizzes instead of total attempts for all quizzes  ****I THINK IT COULD BE DONE BETTER BUT ITS DONE******
 
-// write your tests!
+// write your tests! 

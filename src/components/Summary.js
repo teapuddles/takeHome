@@ -18,7 +18,7 @@ const Summary = (props) => {
         <br></br>
         <div className='summary-buttons'>
             <h3 className='next-quiz-button' onClick={onNextQuiz}>Next Quiz</h3>
-            <h3 className='retake-quiz-button' onClick={onRetake}>Retake{console.log(onRetake)}</h3>
+            <h3 className='retake-quiz-button' onClick={onRetake}>Retake</h3>
         </div>
         </div>
     )
