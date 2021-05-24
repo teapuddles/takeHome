@@ -7,6 +7,7 @@ import { getMessage } from './data/messages.js'
 
 const App = () => {
 
+
   // state variables
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -17,15 +18,50 @@ const App = () => {
   const [nextButton, setNextButton] = useState(false)
   const [answerFeedback, setAnswerFeedback] = useState(null)
 
+
   // combines and shuffles answers with Fischer/Yates helper
   const answers = useMemo (() => {
     const incorrectOptions = quizzes[currentQuiz].questions[currentQuestion].incorrectAnswers
     const correctOptions = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
+
     const combinedOptions = [...incorrectOptions, correctOptions]
 
     return shuffle(combinedOptions)
 
   }, [currentQuiz, currentQuestion])
+
+
+  // handleAnswerClick sends to handleAnswer 
+  const handleAnswerClick = (e, answer) => {
+    if(!answerFeedback) {
+      handleAnswer(e, answer)
+    } 
+  }
+
+
+  const handleAnswer = (e, answer) => {
+    e.target.style.pointerEvents = 'none'
+    e.target.style.borderColor = 'green'
+
+    const theCorrectAnswer = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
+    const selectedAnswer = answer
+
+    setNextButton(true)
+  
+    if( selectedAnswer === theCorrectAnswer ){
+      const newScore = score + 1
+      setScore(newScore)
+      setAnswerFeedback('Correct!')
+
+    } else {
+      e.target.style.borderColor = 'red'
+      e.target.style.textDecoration = 'line-through'
+      e.target.style.textDecorationColor = 'black'
+      
+      setAnswerFeedback('Incorrect...')
+
+    }
+  }
 
 
   // handle Next Question Click
@@ -47,6 +83,7 @@ const App = () => {
       setAttempts(newAttempt)
 		}
   }
+
 
   // next quiz click passed to Summary
   const handleNextQuizClick = () => {
@@ -70,43 +107,24 @@ const App = () => {
     }
   }
 
+// 
   const handleRetakeClick = () => {
     setCurrentQuestion(0)
     setScore(0)
     setNextButton(false)
     setShowSummary(false)
   }
-
-  // Handle clicking an answer 
-  const handleAnswerClick = (e, answer) => {
-    const theCorrectAnswer = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
-    setNextButton(true)
   
-    if( answer === theCorrectAnswer ){
-      e.target.style.borderColor = 'green'
-      e.target.style.pointerEvents = 'none'
-
-      const newScore = score + 1
-      setScore(newScore)
-      setAnswerFeedback('Correct!')
-
-    } else {
-      e.target.style.borderColor = 'red'
-      e.target.style.textDecoration = 'line-through'
-      e.target.style.textDecorationColor = 'black'
-      
-      setAnswerFeedback('Incorrect...')
-
-    }
-  }
 
 
   return (
     <div className='app'>
        <div className='quiz-title'>{quizzes[currentQuiz].title}</div>
+
         {showSummary ? (
       <Summary score={score} attempts={attempts} quizTotal={quizzes[currentQuiz].questions} handleNextQuizClick={handleNextQuizClick} handleRetakeClick={handleRetakeClick} getMessage={getMessage}/>
     ) : (
+
       <>
       <br></br>
         <div className='question-section'>
@@ -114,7 +132,8 @@ const App = () => {
       <br></br>
         <div className='answer-section' key={currentQuestion}>
         {answers.map((answer) => 
-            <li className='answer-list' onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
+        // if(answerFeedback ? onClick : console.log())
+            <li className='answer-list' key={answer} onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
         )}
       </div>
       </div>
@@ -127,12 +146,10 @@ const App = () => {
 };
 
 
-export default App;
-// TO DOS:
-// fix incorrect answers from persisting, see assigned key *****DONE ON SATURDAY*****
+export default App; 
 
-// keep score from going up past 1 per correct answer click *****DONE ON SATURDAY*****
+// TO DOS:
 
 // assign attempts to their proper quizzes instead of total attempts for all quizzes  ****I THINK IT COULD BE DONE BETTER BUT ITS DONE******
 
-// write your tests! 
+// write your tests
