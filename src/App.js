@@ -7,7 +7,6 @@ import { getMessage } from './data/messages.js'
 
 const App = () => {
 
-
   // state variables
   const [currentQuiz, setCurrentQuiz] = useState(0)
   const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -44,11 +43,10 @@ const App = () => {
     e.target.style.borderColor = 'green'
 
     const theCorrectAnswer = quizzes[currentQuiz].questions[currentQuestion].correctAnswer
-    const selectedAnswer = answer
 
     setNextButton(true)
   
-    if( selectedAnswer === theCorrectAnswer ){
+    if( answer === theCorrectAnswer ){
       const newScore = score + 1
       setScore(newScore)
       setAnswerFeedback('Correct!')
@@ -64,7 +62,7 @@ const App = () => {
   }
 
 
-  // handle Next Question Click
+  // Move to Next Question Click
   const handleNextQuestionClick = () => {
 
     const nextQuestion = currentQuestion + 1
@@ -85,7 +83,7 @@ const App = () => {
   }
 
 
-  // next quiz click passed to Summary
+  // Move to Next Quiz click, passed to Summary
   const handleNextQuizClick = () => {
 
     const nextQuiz = currentQuiz + 1
@@ -107,7 +105,8 @@ const App = () => {
     }
   }
 
-// 
+
+ // Retake Click, passed to Summary 
   const handleRetakeClick = () => {
     setCurrentQuestion(0)
     setScore(0)
@@ -115,7 +114,6 @@ const App = () => {
     setShowSummary(false)
   }
   
-
 
   return (
     <div className='app'>
@@ -130,9 +128,8 @@ const App = () => {
         <div className='question-section'>
         <div className='question-text'>{quizzes[currentQuiz].questions[currentQuestion].text}</div>
       <br></br>
-        <div className='answer-section' key={currentQuestion}>
+        <div className='answer-section' key={currentQuestion} >
         {answers.map((answer) => 
-        // if(answerFeedback ? onClick : console.log())
             <li className='answer-list' key={answer} onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
         )}
       </div>
@@ -147,9 +144,3 @@ const App = () => {
 
 
 export default App; 
-
-// TO DOS:
-
-// assign attempts to their proper quizzes instead of total attempts for all quizzes  ****I THINK IT COULD BE DONE BETTER BUT ITS DONE******
-
-// write your tests
