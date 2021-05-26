@@ -24,6 +24,16 @@
   margin-bottom: -10px;
 }
 
+.answer-list.correct-answer {
+  border-color: green;
+}
+
+.answer-list.incorrect-answer {
+  border-color: red;
+  text-decoration: line-through;
+  text-decoration-color: black;
+}
+
 
 /* buttons */
 

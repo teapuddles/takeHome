@@ -37,6 +37,21 @@ const App = () => {
     } 
   }
 
+    // getClasses adds the classes of correct/incorrect
+    const getClasses = (currentAnswer) => {
+      if (nextButton) {
+        if (
+          currentAnswer ===
+          quizzes[currentQuiz].questions[currentQuestion].correctAnswer
+        ) {
+          return ' correct-answer';
+        } else if (userAnswer === currentAnswer) {
+          return ' incorrect-answer';
+        }
+      }
+      return '';
+    };
+
 
   const handleAnswer = (e, answer) => {
     e.target.style.pointerEvents = 'none'
@@ -130,7 +145,8 @@ const App = () => {
       <br></br>
         <div className='answer-section' key={currentQuestion} >
         {answers.map((answer) => 
-            <li className='answer-list' key={answer} onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
+            <li className={`answer-list${getClasses(answer)}`}
+            key={`${currentQuestion}-${answer}`} onClick={(e) => handleAnswerClick(e, answer)}>{answer}</li>
         )}
       </div>
       </div>
