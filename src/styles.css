@@ -10,7 +10,8 @@
   border: 5px;
 }
 
-.answer-list{
+.answer-list {
+  cursor: pointer;
   list-style-type: upper-alpha;
   border: 1px solid white;
   margin-top: 2px;
@@ -18,10 +19,17 @@
   margin-right: 25px;
 }
 
-.correct-incorrect-message{
+.correct-incorrect-message {
   font-style: italic;
   font-size: small;
-  margin-bottom: -10px;
+}
+
+.feedback-and-button {
+  display: flex;
+  flex-direction: column;
+  padding-left: 25px;
+  padding-right: 25px;
+  align-items: center;
 }
 
 .answer-list.correct-answer {
@@ -34,31 +42,35 @@
   text-decoration-color: black;
 }
 
-
 /* buttons */
 
-.next-question{
+button {
+  outline: none;
+  background-color: white;
   border: 1px solid black;
-  margin-left: 100px;
-  margin-right: 100px;
-  padding: 5px
+  padding: 5px;
+  cursor: pointer;
 }
 
-.summary-buttons{
+button.next-question {
+  width: 50%;
+}
+
+.summary-buttons {
   display: flex;
   justify-content: space-evenly;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-top: 25px;
 }
 
-.next-quiz-button{
+.summary-buttons button {
   border: 1px solid black;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 5px
+  padding: 5px;
+  flex: 1;
 }
 
-.retake-quiz-button{
-  border: 1px solid black;
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 5px
+/* using last-type-of keeps things centered in our flex*/
+.summary-buttons button:not(:last-of-type) {
+  margin-right: 25px;
 }
